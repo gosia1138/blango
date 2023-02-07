@@ -6,6 +6,8 @@ name = "pypi"
 [packages]
 django = "*"
 crispy-bootstrap5 = "*"
+django-configurations = "*"
+dj-database-url = "*"
 
 [dev-packages]
 
