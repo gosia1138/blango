@@ -3,12 +3,16 @@ from .models import Post
 from .forms import CommentForm
 from django.shortcuts import get_object_or_404
 import logging
+from django.views.decorators.cache import cache_page
+from django.views.decorators.vary import vary_on_cookie
+from django.utils import timezone 
 
 logger = logging.getLogger(__name__)
 
-# Create your views here.
+# @cache_page(60 * 5)
+@vary_on_cookie
 def index(request):
-    posts = Post.objects.all()
+    posts = Post.objects.filter(published_at__lte=timezone.now()).select_related("author")
     logger.debug("Posts: %s", len(posts))
     return render(request, "blog/index.html", {"posts": posts})
 

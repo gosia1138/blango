@@ -2,6 +2,9 @@ from django import template
 from django.utils.html import format_html
 from django.contrib.auth import get_user_model
 from blog.models import Post
+import logging
+
+logger = logging.getLogger(__name__)
 
 user_model = get_user_model()
 
@@ -52,4 +55,6 @@ def endcol():
 @register.inclusion_tag("blog/post-comments.html")
 def recent_posts(post):
     posts = Post.objects.exclude(pk=post.pk)[:5]
-    return {"posts": posts}
+    # Log call for 'recent posts' - template fragment caching
+    logger.debug("Loaded %d recent posts for post %d", len(posts), post.pk)
+    return {"title": "Recent Posts", "posts": posts}

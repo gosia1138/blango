@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
-{% load blog_extras %}
+{% load blog_extras cache %}
 
 
 {% block content %}
-    <h2>{{ post.title }}</h2>
+    
     {% row %}
         {% col %}
+            <h2>{{ post.title }}</h2>
             {% include "blog/post-byline.html" %}
         {% endcol %}
     {% endrow %}
@@ -14,19 +15,24 @@
             <p>{{ post.content|safe }}</p>
         {% endcol %}
     {% endrow %}
+    {% if post.author.profile %}
+        {% row %}
+            {% col %}
+                <h4>About the author</h4>
+                <p>{{ post.author.profile.bio }}</p>
+            {% endcol %}
+        {% endrow %}
+    {% endif %}
 
-    <h3>Comments</h3>
+    {% include "blog/post-comments.html" %}
+
+
     {% row %}
         {% col %}
-            {% include "blog/post-comments.html" %}
-        {% endcol %}
-    {% endrow %}
-
-    
-    <h2>Recent posts</h3>
-    {% row %}
-        {% col %}
-            {% recent_posts post %}
+            <h2>Recent posts</h3>
+            {% cache 3600 recent_posts %}
+                {% recent_posts post %}
+            {% endcache %}
         {% endcol %}
     {% endrow %}
 {% endblock %}

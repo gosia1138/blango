@@ -8,6 +8,8 @@ django = "*"
 crispy-bootstrap5 = "*"
 django-configurations = "*"
 dj-database-url = "*"
+django-debug-toolbar = "*"
+django-registration = "*"
 
 [dev-packages]
 
