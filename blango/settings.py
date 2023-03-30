@@ -51,12 +51,17 @@ class Dev(Configuration):
         "django.contrib.contenttypes",
         "django.contrib.sessions",
         "django.contrib.messages",
+        "django.contrib.sites",
         "django.contrib.staticfiles",
         "blango_auth",
         "blog",
         "crispy_forms",
         "crispy_bootstrap5",
         "debug_toolbar",
+        "allauth",
+        "allauth.account",
+        "allauth.socialaccount",
+        "allauth.socialaccount.providers.google",
     ]
 
     MIDDLEWARE = [
@@ -112,6 +117,20 @@ class Dev(Configuration):
             "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
         },
     ]
+
+    # Account activation
+
+    ACCOUNT_ACTIVATION_DAYS = 7
+    EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+    # Allauth
+
+    ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+    ACCOUNT_EMAIL_REQUIRED = True
+    ACCOUNT_USERNAME_REQUIRED = False
+    ACCOUNT_AUTHENTICATION_METHOD = "email"
+
+    SITE_ID = 1
 
     # Internationalization
     # https://docs.djangoproject.com/en/3.2/topics/i18n/
@@ -181,11 +200,6 @@ class Dev(Configuration):
     INTERNAL_IPS = [
         "127.0.0.1",
     ]
-
-    # Account activation
-
-    ACCOUNT_ACTIVATION_DAYS = 7
-    EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 
 class Prod(Dev):

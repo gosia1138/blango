@@ -10,6 +10,7 @@ django-configurations = "*"
 dj-database-url = "*"
 django-debug-toolbar = "*"
 django-registration = "*"
+django-allauth = "*"
 
 [dev-packages]
 
