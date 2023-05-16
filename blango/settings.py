@@ -63,6 +63,7 @@ class Dev(Configuration):
         "allauth.socialaccount",
         "allauth.socialaccount.providers.google",
         "rest_framework",
+        "rest_framework.authtoken",
     ]
 
     MIDDLEWARE = [
@@ -201,6 +202,17 @@ class Dev(Configuration):
     INTERNAL_IPS = [
         "127.0.0.1",
     ]
+
+    REST_FRAMEWORK = {
+        "DEFAULT_AUTHENTICATION_CLASSES": [
+            "rest_framework.authentication.BasicAuthentication",
+            "rest_framework.authentication.SessionAuthentication",
+            "rest_framework.authentication.TokenAuthentication",
+        ],
+        "DEFAULT_PERMISSION_CLASSES": [
+            "rest_framework.permissions.IsAuthenticatedOrReadOnly"
+        ],
+    }
 
 
 class Prod(Dev):
